@@ -1,0 +1,18 @@
+stages:
+  - build
+
+build:
+  stage: build
+  image: node:16.4-alpine3.14
+  before_script:
+    - npm install
+  script:
+    - npm run build
+    - tar czf build.tar.gz build
+  artifacts:
+    paths:
+      - build.tar.gz
+  tags:
+    - docker
+  rules:
+    - if: $CI_COMMIT_BRANCH == "production"
